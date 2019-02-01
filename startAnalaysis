@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "$1"
+python ./forester.py "$1" false
