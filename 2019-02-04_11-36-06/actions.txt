@@ -1,3 +1,0 @@
-@7![imaandroid]---UserCreated
-@8![imaandroid]---CmdsetPresenter=0
-@35![imaandroid]---UserDestroyed
