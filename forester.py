@@ -9,10 +9,23 @@ fileString = str(sys.argv[1])
 rescan = str(sys.argv[2])
 
 filePath = "recorder_Data/EventRecords/" + fileString + "/Dissonance_Diagnostics/"
-speechPath = "recorder_Data/EventRecords/" + fileString + "/speech/"
-noisePath = "recorder_Data/EventRecords/" + fileString + "/noise/"
-nothingPath = "recorder_Data/EventRecords/" + fileString + "/nothing/"
-errorPath = "recorder_Data/EventRecords/" + fileString + "/error/"
+speechPath = "eventRecords/storage/" + fileString + "/speech/"
+noisePath = "eventRecords/storage/" + fileString + "/noise/"
+nothingPath = "eventRecords/storage/" + fileString + "/nothing/"
+errorPath = "eventRecords/storage/" + fileString + "/error/"
+logPath = "eventRecords/eventLog.txt"
+
+if not os.path.exists(speechPath):
+    os.makedirs(speechPath)
+if not os.path.exists(noisePath):
+    os.makedirs(noisePath)
+if not os.path.exists(nothingPath):
+    os.makedirs(nothingPath)
+if not os.path.exists(errorPath):
+    os.makedirs(errorPath)
+
+with open(logPath, "a") as myfile:
+    myfile.write(fileString + "\n")
 
 """
 if(rescan == "true"):
@@ -33,4 +46,4 @@ for filename in os.listdir(filePath):
         if(nothing > speech and nothing > noise):
             shutil.move(trackPath, nothingPath + filename)
     if(type(b) != numpy.ndarray):
-            """shutil.move(trackPath, errorPath + filename)"""
+            shutil.move(trackPath, errorPath + filename)
