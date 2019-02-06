@@ -8,6 +8,8 @@ from pyAudioAnalysis import audioTrainTest as aT
 fileString = str(sys.argv[1])
 rescan = str(sys.argv[2])
 
+rootPath = "recorder_Data/EventRecords/" + fileString + "/";
+S3Path = "eventRecords/storage/" + fileString + "/";
 filePath = "recorder_Data/EventRecords/" + fileString + "/Dissonance_Diagnostics/"
 speechPath = "eventRecords/storage/" + fileString + "/speech/"
 noisePath = "eventRecords/storage/" + fileString + "/noise/"
@@ -24,8 +26,11 @@ if not os.path.exists(nothingPath):
 if not os.path.exists(errorPath):
     os.makedirs(errorPath)
 
-with open(logPath, "a") as myfile:
-    myfile.write(fileString + "\n")
+shutil.move(rootPath + "actions.txt", S3Path + "actions.txt")
+shutil.move(rootPath + "audio.txt", S3Path + "audio.txt")
+shutil.move(rootPath + "player.txt", S3Path + "player.txt")
+shutil.move(rootPath + "slideReactions.txt", S3Path + "slideReactions.txt")
+shutil.move(rootPath + "transforms.txt", S3Path + "transforms.txt")
 
 """
 if(rescan == "true"):
@@ -47,3 +52,7 @@ for filename in os.listdir(filePath):
             shutil.move(trackPath, nothingPath + filename)
     if(type(b) != numpy.ndarray):
             shutil.move(trackPath, errorPath + filename)
+
+
+with open(logPath, "a") as myfile:
+    myfile.write(fileString + "\n")
