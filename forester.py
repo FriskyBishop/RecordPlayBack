@@ -32,10 +32,10 @@ shutil.move(rootPath + "player.txt", S3Path + "player.txt")
 shutil.move(rootPath + "slideReactions.txt", S3Path + "slideReactions.txt")
 shutil.move(rootPath + "transforms.txt", S3Path + "transforms.txt")
 
-"""
+
 if(rescan == "true"):
     aT.featureAndTrain(["Python/pyAudioAnalysis-master/pyAudioAnalysis/classifierData/noise","Python/pyAudioAnalysis-master/pyAudioAnalysis/classifierData/speech","Python/pyAudioAnalysis-master/pyAudioAnalysis/classifierData/nothing"], 1.0, 1.0, aT.shortTermWindow, aT.shortTermStep, "svm", "svmSMtemp", False)
-"""
+
 for filename in os.listdir(filePath):
     trackPath = filePath + filename;
     a = aT.fileClassification(trackPath, "svmSMtemp","svm")
@@ -53,6 +53,9 @@ for filename in os.listdir(filePath):
     if(type(b) != numpy.ndarray):
             shutil.move(trackPath, errorPath + filename)
 
+with open(logPath, 'r') as myfile:
+    data=myfile.read()
 
-with open(logPath, "a") as myfile:
-    myfile.write(fileString + "\n")
+f= open(logPath,"w+")
+f.write(data + fileString + ",\n")
+f.close()
