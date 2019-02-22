@@ -26,15 +26,16 @@ if not os.path.exists(nothingPath):
 if not os.path.exists(errorPath):
     os.makedirs(errorPath)
 
-shutil.move(rootPath + "actions.txt", S3Path + "actions.txt")
-shutil.move(rootPath + "audio.txt", S3Path + "audio.txt")
-shutil.move(rootPath + "player.txt", S3Path + "player.txt")
-shutil.move(rootPath + "slideReactions.txt", S3Path + "slideReactions.txt")
-shutil.move(rootPath + "transforms.txt", S3Path + "transforms.txt")
+shutil.copyfile(rootPath + "actions.txt", S3Path + "actions.txt")
+shutil.copyfile(rootPath + "audio.txt", S3Path + "audio.txt")
+shutil.copyfile(rootPath + "player.txt", S3Path + "player.txt")
+shutil.copyfile(rootPath + "slideReactions.txt", S3Path + "slideReactions.txt")
+shutil.copyfile(rootPath + "transforms.txt", S3Path + "transforms.txt")
 
-
+"""
 if(rescan == "true"):
     aT.featureAndTrain(["Python/pyAudioAnalysis-master/pyAudioAnalysis/classifierData/noise","Python/pyAudioAnalysis-master/pyAudioAnalysis/classifierData/speech","Python/pyAudioAnalysis-master/pyAudioAnalysis/classifierData/nothing"], 1.0, 1.0, aT.shortTermWindow, aT.shortTermStep, "svm", "svmSMtemp", False)
+"""
 
 for filename in os.listdir(filePath):
     trackPath = filePath + filename;
@@ -45,13 +46,13 @@ for filename in os.listdir(filePath):
         speech = b[1]
         nothing = b[2]
         if(speech > noise and speech > nothing):
-            shutil.move(trackPath, speechPath + filename)
+            shutil.copyfile(trackPath, speechPath + filename)
         if(noise > speech and noise > nothing):
-            shutil.move(trackPath, noisePath + filename)
+            shutil.copyfile(trackPath, noisePath + filename)
         if(nothing > speech and nothing > noise):
-            shutil.move(trackPath, nothingPath + filename)
+            shutil.copyfile(trackPath, nothingPath + filename)
     if(type(b) != numpy.ndarray):
-            shutil.move(trackPath, errorPath + filename)
+            shutil.copyfile(trackPath, speechPath + filename)
 
 with open(logPath, 'r') as myfile:
     data=myfile.read()
